@@ -24,11 +24,22 @@ namespace Isen.Dotnet.Library.Context
             modelBuilder.Entity<Person>()
                 .ToTable(nameof(Person))
                 .HasKey(p => p.Id);
+            // Relation 0,1 entreperson et Service
+            modelBuilder.Entity<Person>()
+                .HasOne(p => p.Service)
+                .WithMany()
+                .HasForeignKey(p => p.ServiceId);
 
             // Table de Role
             modelBuilder.Entity<Role>()
                 .ToTable(nameof(Role))
                 .HasKey(r => r.Id);
+
+            // Table de Service
+            modelBuilder
+                .Entity<Service>()
+                .ToTable(nameof(Service))
+                .HasKey(s => s.Id);
 
             // Table entre Role et Person
             modelBuilder.Entity<PersonRole>()
@@ -44,11 +55,6 @@ namespace Isen.Dotnet.Library.Context
                 .HasOne(pr => pr.Role)
                 .WithMany(r => r.PersonRoles)
                 .HasForeignKey(pr => pr.RoleId);
-            
-            modelBuilder
-                .Entity<Service>()
-                .ToTable(nameof(Service))
-                .HasKey(s => s.Id);
         }
 
     }

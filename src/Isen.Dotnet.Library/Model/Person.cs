@@ -13,6 +13,9 @@ namespace Isen.Dotnet.Library.Model
         public string Email {get;set;}
 
         public ICollection<PersonRole> PersonRoles {get;set;}
+
+        public int? ServiceId {get;set;}
+        public Service Service {get;set;}
         
         public override string ToString() =>
             $"{FirstName} {LastName} | {DateOfBirth} ({Telephone} / {Email})";
