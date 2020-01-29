@@ -26,6 +26,7 @@ namespace Isen.Dotnet.Web
                 dataInitializer.AddServices();
                 dataInitializer.AddRoles();
                 dataInitializer.AddPersons();
+                dataInitializer.LinkPersonsRoles();
             }
             // l'exécuter
             host.Run(); // Loop d'exécution et d'écoute du serveur web

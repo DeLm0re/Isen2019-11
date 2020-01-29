@@ -186,5 +186,25 @@ namespace Isen.Dotnet.Library.Services
             _context.AddRange(roles);
             _context.SaveChanges();
         }
+
+        public void LinkPersonsRoles()
+        {
+            _logger.LogWarning("Linking persons with roles...");
+            var persons = _context.PersonCollection.ToList();
+            var roles = _context.RoleCollection.ToList();
+
+            // On fait tous les assocs possibles et stock dans une list
+            var personsRoles = GetPersonsRoles(persons, roles);
+
+            // TODO Fonction qui :
+            //      Parcours la liste persons
+            //      Attribue aléatoirement à chaque person un certain nombre d'assoc qui le concerne depuis personsRoles
+            //      A chaque attribution on _context.Update(person)
+            //      On rajoute cette person dans le role en question
+            //      A chaque attribution on _context.Update(role)
+
+            _context.SaveChanges();
+
+        }
     }
 }

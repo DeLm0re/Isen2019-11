@@ -11,5 +11,6 @@ namespace Isen.Dotnet.Library.Services
          void AddPersons();
          void AddServices();
          void AddRoles();
+         void LinkPersonsRoles();
     }
 }
