@@ -1,7 +1,7 @@
-//using System.Linq;
+using System.Linq;
 using Isen.Dotnet.Library.Context;
 using Isen.Dotnet.Library.Model;
-//using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Isen.Dotnet.Web.Controllers
@@ -14,14 +14,10 @@ namespace Isen.Dotnet.Web.Controllers
         {
         }               
 
-        // Exemple d'override de la query : liste les personnes
-        //protected override IQueryable<Person> BaseQuery() =>
-            //base.BaseQuery()
-                // Inclure BirthCity lors d'une requête faite sur une ville
-                //.Include(p => p.BirthCity)
-                //// Filtrer sur les villes qui commencent par Toul
-                //.Where(p => p.BirthCity.StartsWith("Toul"))
-                // Trier par ordre alpha des villes
-                //.OrderBy(p => p.BirthCity.Name);
+        // Override de la query : liste les personnes
+        protected override IQueryable<Person> BaseQuery() =>
+            base.BaseQuery()
+                // Inclure Service lors d'une requête faite sur une ville
+                .Include(p => p.Service);
     }
 }
