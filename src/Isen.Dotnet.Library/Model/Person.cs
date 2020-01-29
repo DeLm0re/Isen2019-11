@@ -18,7 +18,7 @@ namespace Isen.Dotnet.Library.Model
         public Service Service {get;set;}
         
         public override string ToString() =>
-            $"{FirstName} {LastName} | {DateOfBirth} ({Telephone} / {Email})";
+            $"{FirstName} {LastName} | {DateOfBirth} ({Telephone} / {Email}) [{Service}]";
         
     }
 }

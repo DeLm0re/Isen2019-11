@@ -87,6 +87,15 @@ namespace Isen.Dotnet.Library.Services
         // Générateur de téléphone
         private string RandomTelephone =>
             '0' + _random.Next(100000000, 999999999).ToString();
+        // Générateur de service
+        private Service RandomService
+        {
+            get
+            {
+                var services = _context.ServiceCollection.ToList();
+                return services[_random.Next(services.Count)];
+            }
+        }
         // Générateur de personne
         private Person RandomPerson()
         {
@@ -98,6 +107,7 @@ namespace Isen.Dotnet.Library.Services
             person.DateOfBirth = RandomDate;
             person.Telephone = RandomTelephone;
             person.Email = firstName.ToLower() + '.' + lastName.ToLower() + "@isen.yncrea.fr";
+            person.Service = RandomService;
             return person;
         }
 
@@ -112,20 +122,13 @@ namespace Isen.Dotnet.Library.Services
             return persons;
         }
 
-        private Service OneService(string name)
-        {
-            Service service = new Service();
-            service.Name = name;
-            return service;
-        }
-
         public List<Service> GetServices()
         {
             var services = new List<Service>();
-            int totalService = _serviceNames.Count();
-            for (var i = 0; i < totalService; i++)
+            int nbService = _serviceNames.Count();
+            for (var i = 0; i < nbService; i++)
             {
-                services.Add(OneService(_serviceNames[i]));
+                services.Add(new Service(_serviceNames[i]));
             }
             return services;
         }
