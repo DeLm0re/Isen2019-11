@@ -96,6 +96,41 @@ namespace Isen.Dotnet.Library.Services
                 return services[_random.Next(services.Count)];
             }
         }
+
+        private List<PersonRole> RandomPersonRoles(Person person)
+        {
+            List<PersonRole> randomPersonRoles = new List<PersonRole>();
+
+            var roles = _context.RoleCollection.ToList();
+
+            // Nombre aléatoire de rôles à ajouter
+            int nbRolesToAdd = _random.Next(4);
+            List<int> indexes = new List<int>();
+
+            // Retirer les doublons
+            for(int i = 0; i < nbRolesToAdd; ++i)
+                indexes.Add(_random.Next(roles.Count()));
+                
+            indexes = indexes.Distinct().ToList();
+            
+
+            // Générer les relations correspondantes
+            foreach(var index in indexes)
+            {
+                Role role = roles[index];
+                PersonRole personRole = new PersonRole();
+                
+                personRole.PersonId = person.Id;
+                personRole.Person = person;
+                personRole.RoleId = role.Id;
+                personRole.Role = role;
+
+                randomPersonRoles.Add(personRole);
+            }
+
+            return randomPersonRoles;
+        }
+
         // Générateur de personne
         private Person RandomPerson()
         {
@@ -193,15 +228,18 @@ namespace Isen.Dotnet.Library.Services
             var persons = _context.PersonCollection.ToList();
             var roles = _context.RoleCollection.ToList();
 
-            // On fait tous les assocs possibles et stock dans une list
-            //var personsRoles = GetPersonsRoles(persons, roles);
+            foreach(var person in persons)
+            {
+                // Get relations Role-Person from Person talbe
+                List<PersonRole> relations = RandomPersonRoles(person);
 
-            // TODO Fonction qui :
-            //      Parcours la liste persons
-            //      Attribue aléatoirement à chaque person un certain nombre d'assoc qui le concerne depuis personsRoles
-            //      A chaque attribution on _context.Update(person)
-            //      On rajoute cette person dans le role en question
-            //      A chaque attribution on _context.Update(role)
+                foreach(var relation in relations)
+                {
+                    // Add it to the PersonRole table
+                    _context.Add(relation);
+                }
+
+            }
 
             _context.SaveChanges();
 

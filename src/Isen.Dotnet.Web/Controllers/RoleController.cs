@@ -1,6 +1,8 @@
 using Isen.Dotnet.Library.Context;
 using Isen.Dotnet.Library.Model;
 using Microsoft.Extensions.Logging;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Isen.Dotnet.Web.Controllers
 {
@@ -10,6 +12,10 @@ namespace Isen.Dotnet.Web.Controllers
             ILogger<RoleController> logger,
             ApplicationDbContext context) : base(logger, context)
         {
-        }               
+        }
+
+        protected override IQueryable<Role> BaseQuery() =>
+            base.BaseQuery()
+                .Include(r => r.PersonRoles);               
     }
 }

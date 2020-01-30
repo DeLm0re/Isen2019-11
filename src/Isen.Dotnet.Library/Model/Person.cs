@@ -27,6 +27,10 @@ namespace Isen.Dotnet.Library.Model
                 foreach(var relation in PersonRoles)
                     rolesDisplay.Append(relation?.Role?.Name + ", ");
             }
+            else
+            {
+                rolesDisplay.Append("Aucun");
+            }
 
             return rolesDisplay.ToString();
         }

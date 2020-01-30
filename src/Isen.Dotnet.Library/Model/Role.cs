@@ -25,7 +25,7 @@ namespace Isen.Dotnet.Library.Model
                 foreach(var relation in PersonRoles)
                     personsDisplay.Append(relation?.Person?.FirstName + " " + relation?.Person?.LastName + ", ");
             }
-                        
+
             return personsDisplay.ToString();
         }
         

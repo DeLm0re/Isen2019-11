@@ -18,6 +18,7 @@ namespace Isen.Dotnet.Web.Controllers
         protected override IQueryable<Person> BaseQuery() =>
             base.BaseQuery()
                 // Inclure Service lors d'une requête faite sur une ville
-                .Include(p => p.Service);
+                .Include(p => p.Service)
+                .Include(p => p.PersonRoles);
     }
 }
