@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Isen.Dotnet.Library.Model
 {
@@ -16,6 +17,19 @@ namespace Isen.Dotnet.Library.Model
 
         public int? ServiceId {get;set;}
         public Service Service {get;set;}
+
+        public string RolesDisplay() 
+        {
+            var rolesDisplay = new StringBuilder();
+
+            if(PersonRoles != null)
+            {
+                foreach(var relation in PersonRoles)
+                    rolesDisplay.Append(relation?.Role?.Name + ", ");
+            }
+
+            return rolesDisplay.ToString();
+        }
         
         public override string ToString() =>
             $"{FirstName} {LastName} | {DateOfBirth} ({Telephone} / {Email}) [{Service}]";

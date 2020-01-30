@@ -194,7 +194,7 @@ namespace Isen.Dotnet.Library.Services
             var roles = _context.RoleCollection.ToList();
 
             // On fait tous les assocs possibles et stock dans une list
-            var personsRoles = GetPersonsRoles(persons, roles);
+            //var personsRoles = GetPersonsRoles(persons, roles);
 
             // TODO Fonction qui :
             //      Parcours la liste persons
