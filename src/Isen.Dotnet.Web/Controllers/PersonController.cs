@@ -19,6 +19,6 @@ namespace Isen.Dotnet.Web.Controllers
             base.BaseQuery()
                 // Inclure Service lors d'une requête faite sur une ville
                 .Include(p => p.Service)
-                .Include(p => p.PersonRoles);
+                .Include("PersonRoles.Role");
     }
 }

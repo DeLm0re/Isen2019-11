@@ -13,7 +13,7 @@ namespace Isen.Dotnet.Library.Model
         public string Telephone{get;set;}
         public string Email {get;set;}
 
-        public ICollection<PersonRole> PersonRoles {get;set;}
+        public MyCollection<PersonRole> PersonRoles {get;set;}
 
         public int? ServiceId {get;set;}
         public Service Service {get;set;}
@@ -22,10 +22,10 @@ namespace Isen.Dotnet.Library.Model
         {
             var rolesDisplay = new StringBuilder();
 
-            if(PersonRoles != null)
+            if(PersonRoles?.Count > 0)
             {
                 foreach(var relation in PersonRoles)
-                    rolesDisplay.Append(relation?.Role?.Name + ", ");
+                    rolesDisplay.Append(relation?.Role?.Name + Environment.NewLine);
             }
             else
             {

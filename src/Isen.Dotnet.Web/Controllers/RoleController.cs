@@ -16,6 +16,6 @@ namespace Isen.Dotnet.Web.Controllers
 
         protected override IQueryable<Role> BaseQuery() =>
             base.BaseQuery()
-                .Include(r => r.PersonRoles);               
+                .Include("PersonRoles.Person");               
     }
 }
