@@ -120,8 +120,15 @@
                     @foreach (var role in _context.RoleCollection)
                     {
                         <li>       
-                            <input type="checkbox" name="PersonRole.Role" /> @role.Name
-                        </li>
+                        @if(Model.RolesDisplay().Contains(role.Name))
+                        {
+                            <input type="checkbox" name="PersonRole.Role" value="role.Name" checked /> @role.Name
+                        }
+                        else
+                        {
+                            <input type="checkbox" name="PersonRole.Role" value="role.Name" /> @role.Name
+                        }
+                        </li>    
                     }
                 </ul>
             </div>

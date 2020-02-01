@@ -25,7 +25,11 @@ namespace Isen.Dotnet.Library.Model
             if(PersonRoles?.Count > 0)
             {
                 foreach(var relation in PersonRoles)
-                    rolesDisplay.Append(relation?.Role?.Name + Environment.NewLine);
+                {
+                    rolesDisplay.Append(", ");
+                    rolesDisplay.Append(relation?.Role?.Name);
+                }
+                rolesDisplay.Remove(0, 1);
             }
             else
             {
