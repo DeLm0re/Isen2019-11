@@ -87,6 +87,50 @@ namespace Isen.Dotnet.Library.Services
         // Générateur de téléphone
         private string RandomTelephone =>
             '0' + _random.Next(100000000, 999999999).ToString();
+        // Générateur de service
+        private Service RandomService
+        {
+            get
+            {
+                var services = _context.ServiceCollection.ToList();
+                return services[_random.Next(services.Count)];
+            }
+        }
+
+        private List<PersonRole> RandomPersonRoles(Person person)
+        {
+            List<PersonRole> randomPersonRoles = new List<PersonRole>();
+
+            var roles = _context.RoleCollection.ToList();
+
+            // Nombre aléatoire de rôles à ajouter
+            int nbRolesToAdd = _random.Next(4);
+            List<int> indexes = new List<int>();
+
+            // Retirer les doublons
+            for(int i = 0; i < nbRolesToAdd; ++i)
+                indexes.Add(_random.Next(roles.Count()));
+                
+            indexes = indexes.Distinct().ToList();
+            
+
+            // Générer les relations correspondantes
+            foreach(var index in indexes)
+            {
+                Role role = roles[index];
+                PersonRole personRole = new PersonRole();
+                
+                personRole.PersonId = person.Id;
+                personRole.Person = person;
+                personRole.RoleId = role.Id;
+                personRole.Role = role;
+
+                randomPersonRoles.Add(personRole);
+            }
+
+            return randomPersonRoles;
+        }
+
         // Générateur de personne
         private Person RandomPerson()
         {
@@ -98,6 +142,7 @@ namespace Isen.Dotnet.Library.Services
             person.DateOfBirth = RandomDate;
             person.Telephone = RandomTelephone;
             person.Email = firstName.ToLower() + '.' + lastName.ToLower() + "@isen.yncrea.fr";
+            person.Service = RandomService;
             return person;
         }
 
@@ -112,20 +157,13 @@ namespace Isen.Dotnet.Library.Services
             return persons;
         }
 
-        private Service OneService(string name)
-        {
-            Service service = new Service();
-            service.Name = name;
-            return service;
-        }
-
         public List<Service> GetServices()
         {
             var services = new List<Service>();
-            int totalService = _serviceNames.Count();
-            for (var i = 0; i < totalService; i++)
+            int nbService = _serviceNames.Count();
+            for (var i = 0; i < nbService; i++)
             {
-                services.Add(OneService(_serviceNames[i]));
+                services.Add(new Service(_serviceNames[i]));
             }
             return services;
         }
@@ -182,6 +220,29 @@ namespace Isen.Dotnet.Library.Services
             var roles = GetRoles();
             _context.AddRange(roles);
             _context.SaveChanges();
+        }
+
+        public void LinkPersonsRoles()
+        {
+            _logger.LogWarning("Linking persons with roles...");
+            var persons = _context.PersonCollection.ToList();
+            var roles = _context.RoleCollection.ToList();
+
+            foreach(var person in persons)
+            {
+                // Get relations Role-Person from Person talbe
+                List<PersonRole> relations = RandomPersonRoles(person);
+
+                foreach(var relation in relations)
+                {
+                    // Add it to the PersonRole table
+                    _context.Add(relation);
+                }
+
+            }
+
+            _context.SaveChanges();
+
         }
     }
 }

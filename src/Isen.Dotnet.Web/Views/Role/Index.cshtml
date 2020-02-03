@@ -10,6 +10,7 @@
             <tr>
                 <th scope="col">Id</th>
                 <th scope="col">Nom</th>
+                <th scope="col">Possédant ce rôle</th>
             </tr>
         </thead>
         <tbody>
@@ -18,6 +19,7 @@
             <tr>
                 <th scope="row">@role.Id</th>
                 <td>@role.Name</td>
+                <td>@role.PersonDisplay()</td>
                 <td>
                     <a class="btn btn-outline-primary"
                         asp-controller="Role"

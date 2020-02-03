@@ -23,9 +23,10 @@ namespace Isen.Dotnet.Web
                     .ServiceProvider.GetService<IDataInitializer>();
                 dataInitializer.DropDatabase();
                 dataInitializer.CreateDatabase();
-                dataInitializer.AddPersons();
                 dataInitializer.AddServices();
                 dataInitializer.AddRoles();
+                dataInitializer.AddPersons();
+                dataInitializer.LinkPersonsRoles();
             }
             // l'exécuter
             host.Run(); // Loop d'exécution et d'écoute du serveur web
